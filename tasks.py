@@ -1,6 +1,7 @@
 from crewai import Task
 from crewai_tools import ScrapeWebsiteTool, PDFSearchTool, FileReadTool
 from agents import document_reader, context_analyzer, deadline_checker
+from tools import pdf_tool
 
 # Task 1: Extract Scholarship Information
 extract_scholarship_information = Task(
@@ -9,7 +10,7 @@ extract_scholarship_information = Task(
         "Ensure all relevant information is captured accurately."
     ),
     expected_output="A list of scholarships with their details and links in JSON format.",
-    tools=[FileReadTool()],
+    tools=[pdf_tool],
     output_file='tmp1.json',
     agent=document_reader
 )

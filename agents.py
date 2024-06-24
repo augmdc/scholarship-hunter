@@ -1,6 +1,7 @@
 from langchain_community.llms import Ollama
 from crewai import Agent
 from crewai_tools import ScrapeWebsiteTool, PDFSearchTool, FileReadTool
+from tools import pdf_tool
 
 llm = Ollama(model="phi3")
 
@@ -10,7 +11,7 @@ document_reader = Agent(
     backstory="",
     verbose=True,
     memory=True,
-    tools=[FileReadTool()],
+    tools=[pdf_tool],
     llm=llm
 )
 
