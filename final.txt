@@ -1,0 +1,12 @@
+{
+    "filtered_scholarships": [
+        {
+            "name": "Cycle Graduate Scholarships",
+            "deadline": "March 31st"
+        },
+        {
+            "name": "Norman S. Baldwin Fishery Science Scholarship",
+            "deadline": "Januayer 12th"
+        }
+    ]
+}

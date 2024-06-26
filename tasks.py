@@ -1,5 +1,5 @@
 from crewai import Task
-from crewai_tools import ScrapeWebsiteTool, PDFSearchTool, FileReadTool
+from crewai_tools import ScrapeWebsiteTool
 from agents import document_reader, context_analyzer, deadline_checker
 from tools import pdf_tool
 
@@ -11,18 +11,18 @@ extract_scholarship_information = Task(
     ),
     expected_output="A list of scholarships with their details and links in JSON format.",
     tools=[pdf_tool],
-    output_file='tmp1.json',
+    output_file='tmp1.txt',
     agent=document_reader
 )
 
 # Task 2: Analyze Eligibility
 analyze_eligibility = Task(
     description=(
-        "Analyze the user's context and filter scholarships based on eligibility criteria. "
+        "Analyze the user's context and filter scholarships based on eligibility criteria extracted from the following context. "
         "Context: {user_context}"
     ),
-    expected_output="A list of scholarships the user is actually eligible for in JSON.",
-    output_file='tmp2.json',
+    expected_output="A list of scholarships the user is actually eligible for.",
+    output_file='tmp2.txt',
     agent=context_analyzer
 )
 
@@ -32,9 +32,9 @@ check_deadlines = Task(
         "Check the deadlines of the scholarships and filter out those that have passed. "
         "Ensure to verify the deadlines from the provided links AND the document."
     ),
-    expected_output="A final list of scholarships that the user can still apply for, with unexpired deadlines in JSON.",
+    expected_output="A final list of scholarships that the user can still apply for, with unexpired deadlines.",
     tools=[ScrapeWebsiteTool()],
-    output_file='final.json',
+    output_file='final.txt',
     agent=deadline_checker
 )
 
