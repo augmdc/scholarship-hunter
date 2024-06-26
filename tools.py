@@ -1,24 +1,22 @@
-# TO-DO: Create a PDF scraper that handles PDF files well
 from crewai_tools import PDFSearchTool
+from langchain.tools import tool
+from PyPDF2 import PdfReader
 
-pdf_tool = PDFSearchTool(
-    config=dict(
-        llm=dict(
-            provider="ollama", # or google, openai, anthropic, llama2, ...
-            config=dict(
-                model="phi3",
-                # temperature=0.5,
-                # top_p=1,
-                # stream=true,
-            ),
-        ),
-        embedder=dict(
-            provider="ollama", # or openai, ollama, ...
-            config=dict(
-                model="all-minilm",
-                # task_type="retrieval_document",
-                # title="Embeddings",
-            ),
-        ),
-    )
-)
+@tool
+def pdf_tool(path: str) -> str:
+    """
+    Fetches and preprocesses content from a PDF.
+    Returns the text of the PDF.
+    """
+    with open(path, 'rb') as f:
+        pdf = PdfReader(f)
+        text = '\n'.join(page.extract_text() for page in pdf.pages if page.extract_text())
+    return text
+
+# TO-DO: Create a PDF scraper that finds hyperlinks in a PDF file
+@tool
+def hyperlink_extractor():
+    """
+    Takes in a pdf file, and extracts out hyperlinks with the piece of text that the URL was linked to
+    """
+    return ""
